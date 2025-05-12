@@ -1,5 +1,5 @@
 # atolyetemizlikprojesi
 <img width="581" alt="image" src="https://github.com/user-attachments/assets/2c5ffaa9-7b22-4cff-862c-9877c1a53185" />
-![image](https://github.com/user-attachments/assets/2fdfa594-0c8f-4b7a-bd6d-c37ec4f7694c)
-![image](https://github.com/user-attachments/assets/b6cd3e03-0b12-42d3-b479-b34c0ea4a5e3)
-![image](https://github.com/user-attachments/assets/5f14eda6-c0cc-4a95-b6d3-8bfbbc328ef5)
+<img width="473" alt="image" src="https://github.com/user-attachments/assets/8d5e7636-96c8-4012-9e48-0867c277f984" />
+<img width="586" alt="image" src="https://github.com/user-attachments/assets/dc21d5a3-5823-43a3-9736-997c6719e098" />
+<img width="564" alt="image" src="https://github.com/user-attachments/assets/4fe18da1-df7b-43b5-b88d-f7daf2198454" />
