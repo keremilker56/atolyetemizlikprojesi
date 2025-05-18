@@ -1,12 +1,13 @@
 # Atölye Temizlik Projesi
 ## Önce veritabanında şu tabloları oluşturun:
-veritabanı adı = temizlikprogrami
-gelenogrenci
-gelmeyenogrenci
-ogrenci
-temizlikyapacakogr
-temizlikyapanogr
-temizlikyapmayanogr
+veritabanı adı : temizlikprogrami
+   Tablolar
+gelenogrenci,
+gelmeyenogrenci,
+ogrenci,
+temizlikyapacakogr,
+temizlikyapanogr,
+temizlikyapmayanogr,
 bugununtemizlikcisi
 
 
