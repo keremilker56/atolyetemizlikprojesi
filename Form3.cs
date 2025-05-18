@@ -69,41 +69,43 @@ namespace atolyetemizlikprojesi
 
         private void button3_Click(object sender, EventArgs e)
         {
-            komut = new SqlCommand("insert into gelmeyenogrenci(ogr_no,ad,soyad,sinif,cinsiyet,telefon)values(@no,@ad,@soyad,@sinif,@cinsiyet,@tel)", baglanti);
-            komut.Parameters.AddWithValue("@no", dataGridView1.CurrentRow.Cells["ogr_no"].Value.ToString());
-            komut.Parameters.AddWithValue("@ad", dataGridView1.CurrentRow.Cells["ad"].Value.ToString());
-            komut.Parameters.AddWithValue("@soyad", dataGridView1.CurrentRow.Cells["soyad"].Value.ToString());
-            komut.Parameters.AddWithValue("@sinif", dataGridView1.CurrentRow.Cells["sinif"].Value.ToString());
-            komut.Parameters.AddWithValue("@cinsiyet", dataGridView1.CurrentRow.Cells["cinsiyet"].Value.ToString());
-            komut.Parameters.AddWithValue("@tel", dataGridView1.CurrentRow.Cells["telefon"].Value.ToString());
+            try
+            {
+                if (baglanti.State != ConnectionState.Open)
+                {
+                    baglanti.Open();
+                }
+                komut = new SqlCommand("insert into gelmeyenogrenci(ogr_no,ad,soyad,sinif,cinsiyet,telefon)values(@no,@ad,@soyad,@sinif,@cinsiyet,@tel)", baglanti);
+                komut.Parameters.AddWithValue("@no", dataGridView1.CurrentRow.Cells["ogr_no"].Value.ToString());
+                komut.Parameters.AddWithValue("@ad", dataGridView1.CurrentRow.Cells["ad"].Value.ToString());
+                komut.Parameters.AddWithValue("@soyad", dataGridView1.CurrentRow.Cells["soyad"].Value.ToString());
+                komut.Parameters.AddWithValue("@sinif", dataGridView1.CurrentRow.Cells["sinif"].Value.ToString());
+                komut.Parameters.AddWithValue("@cinsiyet", dataGridView1.CurrentRow.Cells["cinsiyet"].Value.ToString());
+                komut.Parameters.AddWithValue("@tel", dataGridView1.CurrentRow.Cells["telefon"].Value.ToString());
+                komut.ExecuteNonQuery();
 
-            SqlCommand komut1 = new SqlCommand("delete from gelenogrenci where ogr_no=@no", baglanti);
-            komut1.Parameters.AddWithValue("@no", dataGridView1.CurrentRow.Cells["ogr_no"].Value.ToString());
-            //komut1.Parameters.AddWithValue("@ad", dataGridView1.CurrentRow.Cells["ad"].Value.ToString());
-            //komut1.Parameters.AddWithValue("@soyad", dataGridView1.CurrentRow.Cells["soyad"].Value.ToString());
-            //komut1.Parameters.AddWithValue("@sinif", dataGridView1.CurrentRow.Cells["sinif"].Value.ToString());
-            //komut1.Parameters.AddWithValue("@cinsiyet", dataGridView1.CurrentRow.Cells["cinsiyet"].Value.ToString());
-            //komut1.Parameters.AddWithValue("@tel", dataGridView1.CurrentRow.Cells["telefon"].Value.ToString());
+                SqlCommand komut1 = new SqlCommand("delete from gelenogrenci where ogr_no=@no", baglanti);
+                komut1.Parameters.AddWithValue("@no", dataGridView1.CurrentRow.Cells["ogr_no"].Value.ToString());
+                komut1.ExecuteNonQuery();
+                listele();
+                listele2();
+                listele3();
 
+            }
+            catch 
+            {
+                MessageBox.Show("Aynı elemanı listeye ekledin zaten", "Hata!", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
 
+            }
+            finally
+            {
+                if (baglanti.State == ConnectionState.Open)
+                {
+                    baglanti.Close();
+                }
+            }
 
-
-
-
-
-
-            baglanti.Open();
-            komut.ExecuteNonQuery();
-            
-            
-
-            komut1.ExecuteNonQuery();
-            listele();
-            listele2();
-            listele3();
-            baglanti.Close();
-           
-            
+             
          
         }
 
@@ -130,38 +132,45 @@ namespace atolyetemizlikprojesi
 
         private void button5_Click(object sender, EventArgs e)
         {
-            komut = new SqlCommand("insert into gelenogrenci(ogr_no,ad,soyad,sinif,cinsiyet,telefon)values(@no,@ad,@soyad,@sinif,@cinsiyet,@tel)", baglanti);
-            komut.Parameters.AddWithValue("@no", dataGridView1.CurrentRow.Cells["ogr_no"].Value.ToString());
-            komut.Parameters.AddWithValue("@ad", dataGridView1.CurrentRow.Cells["ad"].Value.ToString());
-            komut.Parameters.AddWithValue("@soyad", dataGridView1.CurrentRow.Cells["soyad"].Value.ToString());
-            komut.Parameters.AddWithValue("@sinif", dataGridView1.CurrentRow.Cells["sinif"].Value.ToString());
-            komut.Parameters.AddWithValue("@cinsiyet", dataGridView1.CurrentRow.Cells["cinsiyet"].Value.ToString());
-            komut.Parameters.AddWithValue("@tel", dataGridView1.CurrentRow.Cells["telefon"].Value.ToString());
+            try
+            {
+                if (baglanti.State != ConnectionState.Open)
+                {
+                    baglanti.Open();
+                }
+                komut = new SqlCommand("insert into gelenogrenci(ogr_no,ad,soyad,sinif,cinsiyet,telefon)values(@no,@ad,@soyad,@sinif,@cinsiyet,@tel)", baglanti);
+                komut.Parameters.AddWithValue("@no", dataGridView1.CurrentRow.Cells["ogr_no"].Value.ToString());
+                komut.Parameters.AddWithValue("@ad", dataGridView1.CurrentRow.Cells["ad"].Value.ToString());
+                komut.Parameters.AddWithValue("@soyad", dataGridView1.CurrentRow.Cells["soyad"].Value.ToString());
+                komut.Parameters.AddWithValue("@sinif", dataGridView1.CurrentRow.Cells["sinif"].Value.ToString());
+                komut.Parameters.AddWithValue("@cinsiyet", dataGridView1.CurrentRow.Cells["cinsiyet"].Value.ToString());
+                komut.Parameters.AddWithValue("@tel", dataGridView1.CurrentRow.Cells["telefon"].Value.ToString());
 
 
-            SqlCommand komut1 = new SqlCommand("delete from gelmeyenogrenci where ogr_no=@no", baglanti);
-            komut1.Parameters.AddWithValue("@no", dataGridView1.CurrentRow.Cells["ogr_no"].Value.ToString());
-            //komut1.Parameters.AddWithValue("@ad", dataGridView1.CurrentRow.Cells["ad"].Value.ToString());
-            //komut1.Parameters.AddWithValue("@soyad", dataGridView1.CurrentRow.Cells["soyad"].Value.ToString());
-            //komut1.Parameters.AddWithValue("@sinif", dataGridView1.CurrentRow.Cells["sinif"].Value.ToString());
-            //komut1.Parameters.AddWithValue("@cinsiyet", dataGridView1.CurrentRow.Cells["cinsiyet"].Value.ToString());
-            //komut1.Parameters.AddWithValue("@tel", dataGridView1.CurrentRow.Cells["telefon"].Value.ToString());
+                SqlCommand komut1 = new SqlCommand("delete from gelmeyenogrenci where ogr_no=@no", baglanti);
+                komut1.Parameters.AddWithValue("@no", dataGridView1.CurrentRow.Cells["ogr_no"].Value.ToString());
+
+                komut.ExecuteNonQuery();
+                komut1.ExecuteNonQuery();
+                listele();
+                listele2();
+                listele3();
+            }
+            catch
+            {
+                MessageBox.Show("Aynı elemanı listeye ekledin zaten", "Hata!", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+
+            }
+            finally
+            {
+                if (baglanti.State == ConnectionState.Open)
+                {
+                    baglanti.Close();
+                }
+            }
 
 
 
-
-
-
-
-            baglanti.Open();
-            komut.ExecuteNonQuery();
-            komut1.ExecuteNonQuery();
-            listele();
-            listele2();
-            listele3();
-
-            baglanti.Close();
-           
 
         }
     }

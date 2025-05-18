@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 
 namespace atolyetemizlikprojesi
@@ -17,7 +19,16 @@ namespace atolyetemizlikprojesi
         {
             InitializeComponent();
         }
+        SqlConnection baglanti = new SqlConnection("Data Source=DESKTOP-L2IO4EG\\SQLEXPRESS;Initial Catalog=temizlikprogrami;Integrated Security=True;");
+        public void listele()
+        {
+            SqlCommand komut = new SqlCommand("select * from bugununtemizlikcisi", baglanti);
+            SqlDataAdapter adapter = new SqlDataAdapter(komut);
+            DataTable table = new DataTable();
+            adapter.Fill(table);
+            dataGridView1.DataSource = table;
 
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             Form2 form2 = new Form2();
@@ -42,6 +53,17 @@ namespace atolyetemizlikprojesi
 
             form4.Hide();
             form4.ShowDialog();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+            listele();
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

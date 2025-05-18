@@ -46,7 +46,6 @@ namespace atolyetemizlikprojesi
             listele();
         }
      
-        int indeks = 0;
         List<string> ogrenciler = new List<string>();
 
         private void button3_Click(object sender, EventArgs e)

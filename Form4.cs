@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
-using System.Threading;
+using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace atolyetemizlikprojesi
 {
@@ -19,42 +14,7 @@ namespace atolyetemizlikprojesi
             InitializeComponent();
         }
 
-
-        SqlCommand komut;
         SqlConnection baglanti = new SqlConnection("Data Source=DESKTOP-L2IO4EG\\SQLEXPRESS;Initial Catalog=temizlikprogrami;Integrated Security=True;");
-        public void listele()
-        {
-            komut = new SqlCommand("select * from temizlikyapanogr", baglanti);
-            SqlDataAdapter adapter = new SqlDataAdapter(komut);
-            DataTable table = new DataTable();
-            adapter.Fill(table);
-            dataGridView1.DataSource = table;
-        }
-        public void listele2()
-        {
-            komut = new SqlCommand("select * from temizlikyapacakogr", baglanti);
-            SqlDataAdapter adapter = new SqlDataAdapter(komut);
-            DataTable table = new DataTable();
-            adapter.Fill(table);
-            dataGridView2.DataSource = table;
-        }
-
-
-
-
-
-
-
-
-        private void Form4_Load(object sender, EventArgs e)
-        {
-            listele();
-            listele2();
-            timer1.Start();
-
-            //TimeSpan.FromHours(168);
-
-        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -63,412 +23,541 @@ namespace atolyetemizlikprojesi
             form1.ShowDialog();
         }
 
-        int aralik = 0;
+        public void listele()
+        {
+            using (SqlCommand komut = new SqlCommand("SELECT * FROM temizlikyapanogr", baglanti))
+            {
+                SqlDataAdapter adapter = new SqlDataAdapter(komut);
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+                dataGridView1.DataSource = table;
+            }
+        }
 
+        public void listele2()
+        {
+            using (SqlCommand komut = new SqlCommand("SELECT * FROM temizlikyapacakogr", baglanti))
+            {
+                SqlDataAdapter adapter = new SqlDataAdapter(komut);
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+                dataGridView2.DataSource = table;
+            }
+        }
 
+        private void Form4_Load(object sender, EventArgs e)
+        {
+            listele();
+            listele2();
+        }
+
+      
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+
+        }
         List<string> ogrenciler = new List<string>();
         List<string> ogrenciler2 = new List<string>();
         List<string> ogrenciler3 = new List<string>();
-        List<string> ogrencilerden = new List<string>();
-
-        List<string> ogrencilerden2 = new List<string>();
-        List<string> ogrenciler4 = new List<string>();
-
-        List<string> ogrenciler5 = new List<string>();
+        List<string> ogrencilerkont = new List<string>();
+        List<string> yapmayan = new List<string>();
+        List<string> yapmayanbil = new List<string>();
 
 
 
-        // List<string> ogrenciler4 = new List<string>();
 
 
-        DateTime başlangic = new DateTime(2025, 5, 11);
 
-        int indeks=0;
-        int index = 0;
-        private void timer1_Tick(object sender, EventArgs e)
+        DateTime başlangic = new DateTime(2025, 5, 15);
+        int i = 1;
+        int k = 0;
+        private void button2_Click(object sender, EventArgs e)
         {
-            ogrenciler.Clear();
-            ogrenciler2.Clear();
-            ogrenciler3.Clear();
-            ogrencilerden.Clear();
-            ogrencilerden2.Clear();
-            ogrenciler4.Clear();
-            ogrenciler5.Clear();
-            index = 0;
-
-
-            //ogrenciler4.Clear();
-
+            Form1 form11 = new Form1();
             try
             {
-                if (baglanti.State == ConnectionState.Closed)
-                {
-                    baglanti.Open();
-                }
-
-                using (SqlCommand komut = new SqlCommand("SELECT * FROM temizlikyapmayanogr ORDER BY ogr_no ASC", baglanti))
-                {
-
-
-
-
-                    using (SqlDataReader reader = komut.ExecuteReader())
-                    {
-
-                        while (reader.Read())
-                        {
-                            ogrenciler.Add(reader["ogr_no"].ToString());
-                        }
-
-                    }
-                    using (SqlDataReader reading = komut.ExecuteReader())
-                    {
-                        while (index < ogrenciler.Count / 2)
-                        {
-                            ogrencilerden.Add(reading["ogr_no"].ToString());
-                            index++;
-
-                        }
-                    }
-                    using (SqlDataReader reading2 = komut.ExecuteReader())
-                    {
-                        while (ogrenciler.Count > index)
-                        {
-                            ogrencilerden2[index] = (reading2["ogr_no"].ToString());
-                            index++;
-                        }
-                    }
-
-                }
-
-
-
-
-                if (indeks >= ogrenciler2.Count || indeks >= ogrenciler3.Count)
-                {
-                    indeks = 0;
-                }
+                
                 if (ogrenciler.Count > 0)
                 {
-                    aralik = (int)(DateTime.Now - başlangic).TotalDays % ogrenciler.Count;
-                    string bugununtemizlikcisi = ogrencilerden[aralik];
-                    string bugununtemizlikcisi2 = ogrencilerden2[aralik];
+                    ogrenciler.Clear();
 
-                    //bugünün öğrencileri ayarlaması
-                    if (aralik >= 0 && aralik < ogrenciler.Count)
+                }
+                if (ogrenciler2.Count > 0)
+                {
+                    ogrenciler2.Clear();
+
+                }
+                if (ogrenciler3.Count > 0)
+                {
+                    ogrenciler3.Clear();
+
+                }
+                if (ogrencilerkont.Count > 0)
+                {
+                    ogrencilerkont.Clear();
+
+                }
+                if (yapmayan.Count > 0)
+                {
+                    yapmayan.Clear();
+
+                }
+                if (yapmayanbil.Count > 0)
+                {
+                    yapmayanbil.Clear();
+
+                }
+
+
+
+                if (baglanti.State == ConnectionState.Closed)
+                    baglanti.Open();
+
+
+                // 1. Öğrencileri temizlikyapacakogr tablosundan al
+                SqlCommand Silinecek = new SqlCommand("delete from bugununtemizlikcisi", baglanti);
+                Silinecek.ExecuteNonQuery();
+
+                using (SqlCommand komut = new SqlCommand("SELECT ogr_no FROM temizlikyapacakogr ORDER BY ogr_no ASC", baglanti))///////////////
+                {
+                    using (SqlDataReader reader = komut.ExecuteReader())
                     {
-                        using (SqlCommand komut1 = new SqlCommand("SELECT * FROM temizlikyapmayanogr WHERE ogr_no = @no", baglanti))
+                        while (reader.Read())
+                            ogrenciler.Add(reader["ogr_no"].ToString());
+                        reader.Close(); // Ekledim
+                    }
+                }
+              
+                int j = 0;
+                if (j < ogrenciler.Count)
+                {
+                    using (SqlCommand komut = new SqlCommand("SELECT ogr_no FROM gelenogrenci where ogr_no = @no", baglanti))
+                    {
+                        komut.Parameters.AddWithValue("@no", ogrenciler[j]);
+                        j++;
+                        
+
+                        using (SqlDataReader reader = komut.ExecuteReader())
                         {
-                            komut1.Parameters.AddWithValue("@no", int.Parse(bugununtemizlikcisi));
-
-
-                            using (SqlDataReader okuma1 = komut1.ExecuteReader())
-                            {
-                                if (okuma1.Read())
-                                {
-                                    ogrenciler2.Add(okuma1["ogr_no"].ToString());
-                                    ogrenciler2.Add(okuma1["ad"].ToString());
-                                    ogrenciler2.Add(okuma1["soyad"].ToString());
-                                    ogrenciler2.Add(okuma1["sinif"].ToString());
-                                    ogrenciler2.Add(okuma1["cinsiyet"].ToString());
-                                    ogrenciler2.Add(okuma1["telefon"].ToString());
-                                }
-                            }
-                        }
-                        using (SqlCommand komut1 = new SqlCommand("SELECT * FROM temizlikyapmayanogr WHERE ogr_no = @no", baglanti))
-                        {
-                            komut1.Parameters.AddWithValue("@no", int.Parse(bugununtemizlikcisi2));
-
-
-                            using (SqlDataReader okuma1 = komut1.ExecuteReader())
-                            {
-                                if (okuma1.Read())
-                                {
-                                    ogrenciler4.Add(okuma1["ogr_no"].ToString());
-                                    ogrenciler4.Add(okuma1["ad"].ToString());
-                                    ogrenciler4.Add(okuma1["soyad"].ToString());
-                                    ogrenciler4.Add(okuma1["sinif"].ToString());
-                                    ogrenciler4.Add(okuma1["cinsiyet"].ToString());
-                                    ogrenciler4.Add(okuma1["telefon"].ToString());
-                                }
-                            }
-                        }
-
-
-
-
-
-
-
-                        //gelmeyen öğrenci ayarlaması
-                        using (SqlCommand cmd = new SqlCommand("SELECT ogr_no FROM gelmeyenogrenci where ogr_no=@no", baglanti))
-                        {
-                            cmd.Parameters.AddWithValue("@no", int.Parse(bugununtemizlikcisi));
-
-
-                            using (SqlDataReader sqlDataReader = cmd.ExecuteReader())
-                            {
-                                if (sqlDataReader.Read())
-                                {
-                                    ogrenciler3.Add(sqlDataReader["ogr_no"].ToString());
-                                }
-                            }
-                        }
-
-
-                        using (SqlCommand cmd = new SqlCommand("SELECT ogr_no FROM gelmeyenogrenci where ogr_no=@no", baglanti))
-                        {
-                            cmd.Parameters.AddWithValue("@no", int.Parse(bugununtemizlikcisi2));
-
-
-                            using (SqlDataReader sqlDataReader = cmd.ExecuteReader())
-                            {
-                                if (sqlDataReader.Read())
-                                {
-                                    ogrenciler5.Add(sqlDataReader["ogr_no"].ToString());
-                                }
-                            }
-                        }
-                        if (ogrenciler3.Count > 0)
-                        {
-                            if (ogrenciler2.Count > 0 && indeks < ogrenciler2.Count)
-                            {
-                                if (int.TryParse(ogrenciler3[indeks], out int ogrenci3No) &&//int parse den farkı eğer değerin içinde string bir değer olsaydı program çökedi try parse güvenli kullanım sunar 
-                                    int.TryParse(ogrenciler2[indeks], out int ogrenci2No))
-                                {
-                                    if (ogrenci3No != ogrenci2No)
-                                    {
-
-                                        using (SqlCommand yapanekle = new SqlCommand("INSERT INTO temizlikyapanogr (ogr_no, ad, soyad, sinif, cinsiyet, telefon) VALUES (@ogr_no, @ad, @soyad, @sinif, @cinsiyet, @telefon)", baglanti))
-                                        {
-                                            yapanekle.Parameters.AddWithValue("@ogr_no", ogrenciler2[0]);
-                                            yapanekle.Parameters.AddWithValue("@ad", ogrenciler2[1]);
-                                            yapanekle.Parameters.AddWithValue("@soyad", ogrenciler2[2]);
-                                            yapanekle.Parameters.AddWithValue("@sinif", ogrenciler2[3]);
-                                            yapanekle.Parameters.AddWithValue("@cinsiyet", ogrenciler2[4]);
-                                            yapanekle.Parameters.AddWithValue("@telefon", ogrenciler2[5]);
-                                            yapanekle.ExecuteNonQuery();
-                                        }
-
-
-                                        using (SqlCommand yapansil = new SqlCommand("delete from temizlikyapmayanogr where ogr_no=@no", baglanti))
-                                        {
-                                            yapansil.Parameters.AddWithValue("@no", ogrenciler2[0]);
-                                            yapansil.ExecuteNonQuery();
-                                        }
-
-                                        listele();
-                                        listele2();
-                                    }
-                                    else
-                                    {
-                                        DialogResult cevap = MessageBox.Show("Öğrenci bugün okula gelmemiş sıradaki öğrenci gelsin mi", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                        if (cevap == DialogResult.OK)
-                                        {
-
-
-                                            using (SqlCommand yapansil = new SqlCommand("select * from temizlikyapmayanogr where ogr_no=@no", baglanti))
-                                            {
-                                                yapansil.Parameters.AddWithValue("@no", ogrenciler[int.Parse(bugununtemizlikcisi) + 1]);
-                                                yapansil.ExecuteNonQuery();
-
-
-                                                using (SqlCommand yapansil2 = new SqlCommand("delete from temizlikyapmayanogr where ogr_no=@no", baglanti))
-                                                {
-                                                    yapansil2.Parameters.AddWithValue("@no", int.Parse(bugununtemizlikcisi));
-                                                    yapansil2.ExecuteNonQuery();
-                                                }
-                                                using (SqlCommand yapanekle1 = new SqlCommand("INSERT INTO temizlikyapacakogr (ogr_no, ad, soyad, sinif, cinsiyet, telefon) VALUES (@ogr_no, @ad, @soyad, @sinif, @cinsiyet, @telefon)", baglanti))
-                                                {
-                                                    yapanekle1.Parameters.AddWithValue("@ogr_no", ogrenciler2[0]);
-                                                    yapanekle1.Parameters.AddWithValue("@ad", ogrenciler2[1]);
-                                                    yapanekle1.Parameters.AddWithValue("@soyad", ogrenciler2[2]);
-                                                    yapanekle1.Parameters.AddWithValue("@sinif", ogrenciler2[3]);
-                                                    yapanekle1.Parameters.AddWithValue("@cinsiyet", ogrenciler2[4]);
-                                                    yapanekle1.Parameters.AddWithValue("@telefon", ogrenciler2[5]);
-                                                    yapanekle1.ExecuteNonQuery();
-
-                                                }
-                                                using (SqlDataReader ok = yapansil.ExecuteReader())
-                                                {
-
-
-
-                                                    while (ok.Read())
-                                                    {
-                                                        ogrenciler2.Clear();
-                                                        ogrenciler2.Add(ok["ogr_no"].ToString());
-                                                        ogrenciler2.Add(ok["ad"].ToString());
-                                                        ogrenciler2.Add(ok["soyad"].ToString());
-                                                        ogrenciler2.Add(ok["sinif"].ToString());
-                                                        ogrenciler2.Add(ok["cinsiyet"].ToString());
-                                                        ogrenciler2.Add(ok["telefon"].ToString());
-
-                                                    }
-                                                }
-
-
-
-
-
-                                            }
-                                            using (SqlCommand yapanekle1 = new SqlCommand("INSERT INTO temizlikyapanogr (ogr_no, ad, soyad, sinif, cinsiyet, telefon) VALUES (@ogr_no, @ad, @soyad, @sinif, @cinsiyet, @telefon)", baglanti))
-                                            {
-                                                yapanekle1.Parameters.AddWithValue("@ogr_no", ogrenciler2[0]);
-                                                yapanekle1.Parameters.AddWithValue("@ad", ogrenciler2[1]);
-                                                yapanekle1.Parameters.AddWithValue("@soyad", ogrenciler2[2]);
-                                                yapanekle1.Parameters.AddWithValue("@sinif", ogrenciler2[3]);
-                                                yapanekle1.Parameters.AddWithValue("@cinsiyet", ogrenciler2[4]);
-                                                yapanekle1.Parameters.AddWithValue("@telefon", ogrenciler2[5]);
-                                                yapanekle1.ExecuteNonQuery();
-
-                                            }
-
-
-
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    MessageBox.Show("İndeks sınırları aşıyor!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                }
-                            }
-                        else
-                        {
-                             using (SqlCommand yapanekle = new SqlCommand("INSERT INTO temizlikyapanogr (ogr_no, ad, soyad, sinif, cinsiyet, telefon) VALUES (@ogr_no, @ad, @soyad, @sinif, @cinsiyet, @telefon)", baglanti))
-                             {
-                                    yapanekle.Parameters.AddWithValue("@ogr_no", ogrenciler2[0]);
-                                    yapanekle.Parameters.AddWithValue("@ad", ogrenciler2[1]);
-                                    yapanekle.Parameters.AddWithValue("@soyad", ogrenciler2[2]);
-                                    yapanekle.Parameters.AddWithValue("@sinif", ogrenciler2[3]);
-                                    yapanekle.Parameters.AddWithValue("@cinsiyet", ogrenciler2[4]);
-                                    yapanekle.Parameters.AddWithValue("@telefon", ogrenciler2[5]);
-                                    yapanekle.ExecuteNonQuery();
-                             }
-
-
-                              using (SqlCommand yapansil = new SqlCommand("delete from temizlikyapmayanogr where ogr_no=@no", baglanti))
-                              {
-                                    yapansil.Parameters.AddWithValue("@no", ogrenciler2[0]);
-                                    yapansil.ExecuteNonQuery();
-                              }
-
-                               listele();
-                               listele2();
-                            }
-
-
-                        }//
-                        if (ogrenciler5.Count > 0)
-                        {
-                            if (ogrenciler4.Count > 0 && indeks < ogrenciler4.Count)
-                            {
-                                if (int.TryParse(ogrenciler5[indeks], out int ogrenci5No) &&//int parse den farkı eğer değerin içinde string bir değer olsaydı program çökedi try parse güvenli kullanım sunar 
-                                    int.TryParse(ogrenciler4[indeks], out int ogrenci4No))
-                                {
-                                    if (ogrenci5No != ogrenci4No)
-                                    {
-
-                                        using (SqlCommand yapanekle = new SqlCommand("INSERT INTO temizlikyapanogr (ogr_no, ad, soyad, sinif, cinsiyet, telefon) VALUES (@ogr_no, @ad, @soyad, @sinif, @cinsiyet, @telefon)", baglanti))
-                                        {
-                                            yapanekle.Parameters.AddWithValue("@ogr_no", ogrenciler4[0]);
-                                            yapanekle.Parameters.AddWithValue("@ad", ogrenciler4[1]);
-                                            yapanekle.Parameters.AddWithValue("@soyad", ogrenciler4[2]);
-                                            yapanekle.Parameters.AddWithValue("@sinif", ogrenciler4[3]);
-                                            yapanekle.Parameters.AddWithValue("@cinsiyet", ogrenciler4[4]);
-                                            yapanekle.Parameters.AddWithValue("@telefon", ogrenciler4[5]);
-                                            yapanekle.ExecuteNonQuery();
-                                        }
-
-
-                                        using (SqlCommand yapansil = new SqlCommand("delete from temizlikyapmayanogr where ogr_no=@no", baglanti))
-                                        {
-                                            yapansil.Parameters.AddWithValue("@no", ogrenciler4[0]);
-                                            yapansil.ExecuteNonQuery();
-                                        }
-
-                                        listele();
-                                        listele2();
-                                    }
-                                    else
-                                    {
-                                        DialogResult cevap = MessageBox.Show("Öğrenci bugün okula gelmemiş sıradaki öğrenci gelsin mi", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                        if (cevap == DialogResult.OK)
-                                        {
-
-
-                                            using (SqlCommand yapansil = new SqlCommand("select * from temizlikyapmayanogr where ogr_no=@no", baglanti))
-                                            {
-                                                yapansil.Parameters.AddWithValue("@no", ogrenciler[int.Parse(bugununtemizlikcisi2) + 1]);
-                                                yapansil.ExecuteNonQuery();
-
-
-                                                using (SqlCommand yapansil2 = new SqlCommand("delete from temizlikyapmayanogr where ogr_no=@no", baglanti))
-                                                {
-                                                    yapansil.Parameters.AddWithValue("@no", int.Parse(bugununtemizlikcisi2));
-                                                    yapansil.ExecuteNonQuery();
-                                                }
-                                                using (SqlCommand yapanekle1 = new SqlCommand("INSERT INTO temizlikyapacakogr (ogr_no, ad, soyad, sinif, cinsiyet, telefon) VALUES (@ogr_no, @ad, @soyad, @sinif, @cinsiyet, @telefon)", baglanti))
-                                                {
-                                                    yapanekle1.Parameters.AddWithValue("@ogr_no", ogrenciler4[0]);
-                                                    yapanekle1.Parameters.AddWithValue("@ad", ogrenciler4[1]);
-                                                    yapanekle1.Parameters.AddWithValue("@soyad", ogrenciler4[2]);
-                                                    yapanekle1.Parameters.AddWithValue("@sinif", ogrenciler4[3]);
-                                                    yapanekle1.Parameters.AddWithValue("@cinsiyet", ogrenciler4[4]);
-                                                    yapanekle1.Parameters.AddWithValue("@telefon", ogrenciler4[5]);
-                                                    yapanekle1.ExecuteNonQuery();
-
-                                                }
-                                                using (SqlDataReader ok = yapansil.ExecuteReader())
-                                                {
-
-
-
-                                                    while (ok.Read())
-                                                    {
-                                                        ogrenciler4.Clear();
-                                                        ogrenciler4.Add(ok["ogr_no"].ToString());
-                                                        ogrenciler4.Add(ok["ad"].ToString());
-                                                        ogrenciler4.Add(ok["soyad"].ToString());
-                                                        ogrenciler4.Add(ok["sinif"].ToString());
-                                                        ogrenciler4.Add(ok["cinsiyet"].ToString());
-                                                        ogrenciler4.Add(ok["telefon"].ToString());
-
-                                                    }
-                                                }
-
-                                            }
-                                            using (SqlCommand yapanekle1 = new SqlCommand("INSERT INTO temizlikyapanogr (ogr_no, ad, soyad, sinif, cinsiyet, telefon) VALUES (@ogr_no, @ad, @soyad, @sinif, @cinsiyet, @telefon)", baglanti))
-                                            {
-                                                yapanekle1.Parameters.AddWithValue("@ogr_no", ogrenciler4[0]);
-                                                yapanekle1.Parameters.AddWithValue("@ad", ogrenciler4[1]);
-                                                yapanekle1.Parameters.AddWithValue("@soyad", ogrenciler4[2]);
-                                                yapanekle1.Parameters.AddWithValue("@sinif", ogrenciler4[3]);
-                                                yapanekle1.Parameters.AddWithValue("@cinsiyet", ogrenciler4[4]);
-                                                yapanekle1.Parameters.AddWithValue("@telefon", ogrenciler4[5]);
-                                                yapanekle1.ExecuteNonQuery();
-
-                                            }
-
-
-
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    MessageBox.Show("İndeks sınırları aşıyor!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                }
-                            }
-
-                            indeks++;
-
+                            while (reader.Read())
+                                ogrencilerkont.Add(reader["ogr_no"].ToString());
+                            reader.Close(); // Ekledim
                         }
                     }
                 }
-            }
+            
+                ogrenciler.Clear();
+                for (k = 0; k < ogrencilerkont.Count; k++)
+                {
+                    ogrenciler.Add(ogrencilerkont[k]);
+                }
+            
+       
+             
 
+                // 2. Eğer önceki liste boşsa ogrenci tablosundan al
+
+                if (ogrenciler.Count == 0)
+                {
+                    using (SqlCommand komut = new SqlCommand("SELECT ogr_no FROM ogrenci ORDER BY ogr_no ASC", baglanti))
+                    {
+                        using (SqlDataReader reader = komut.ExecuteReader())
+                        {
+                            while (reader.Read())
+                                ogrenciler.Add(reader["ogr_no"].ToString());
+                            reader.Close(); // Ekledim
+                        }
+                    }
+                  
+
+                    if (ogrenciler.Count == 0)
+                        return;
+                }
+                else
+                {
+                    using (SqlCommand yapacaksil = new SqlCommand("delete from temizlikyapacakogr where ogr_no=@no", baglanti))
+                    {
+                        yapacaksil.Parameters.AddWithValue("@no", ogrenciler[0]);
+                        yapacaksil.ExecuteNonQuery();
+                        
+                        
+                    }
+                    listele2();
+                }
+
+
+
+
+
+                if (ogrenciler.Count == 0)
+                {
+                    MessageBox.Show("Temizlik yapacak öğrenci listesi boş.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                using (SqlCommand komut = new SqlCommand("SELECT ogr_no FROM temizlikyapmayanogr ORDER BY ogr_no ASC", baglanti))///////////////
+                {
+                    using (SqlDataReader reader = komut.ExecuteReader())
+                    {
+                        while (reader.Read())
+                            yapmayan.Add(reader["ogr_no"].ToString());
+                        reader.Close(); // Ekledim
+                    }
+                }
+
+
+
+
+
+
+
+                if(yapmayan.Count == 0)
+                {
+                    using (SqlCommand sil = new SqlCommand("DELETE FROM temizlikyapacakogr", baglanti))
+                    {
+                        sil.ExecuteNonQuery();
+                    }
+
+                    using (SqlCommand sil = new SqlCommand("DELETE FROM temizlikyapanogr", baglanti))
+                    {
+                        sil.ExecuteNonQuery();
+                    }
+
+                    for (int m = 0; m < ogrenciler.Count; m++)
+                    {
+                        using (SqlCommand komut = new SqlCommand("SELECT * FROM ogrenci order by ogr_no asc", baglanti))
+                        {
+                            using (SqlDataReader reader = komut.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    yapmayanbil.Clear();
+                                    yapmayanbil.Add(reader["ogr_no"].ToString());
+                                    yapmayanbil.Add(reader["ad"].ToString());
+                                    yapmayanbil.Add(reader["soyad"].ToString());
+                                    yapmayanbil.Add(reader["sinif"].ToString());
+                                    yapmayanbil.Add(reader["cinsiyet"].ToString());
+                                    yapmayanbil.Add(reader["telefon"].ToString());
+
+
+                                }
+                                reader.Close(); // Ekledim
+                            }
+
+                        }
+                        using (SqlCommand komut = new SqlCommand("insert into temizlikyapmayanogr(ogr_no, ad, soyad, sinif, cinsiyet, telefon) VALUES (@no, @ad, @soyad, @sinif, @cinsiyet, @tel)", baglanti))
+                        {
+                            komut.Parameters.AddWithValue("@no", yapmayanbil[0]);
+                            komut.Parameters.AddWithValue("@ad", yapmayanbil[1]);
+                            komut.Parameters.AddWithValue("@soyad", yapmayanbil[2]);
+                            komut.Parameters.AddWithValue("@sinif", yapmayanbil[3]);
+                            komut.Parameters.AddWithValue("@cinsiyet", yapmayanbil[4]);
+                            komut.Parameters.AddWithValue("@tel", yapmayanbil[5]);
+                            komut.ExecuteNonQuery();
+                        }
+                    }
+             
+                    
+
+                    listele();
+                    listele2();
+
+                }
+
+
+
+
+
+                int aralik = (int)(DateTime.Now - başlangic).TotalDays % ogrenciler.Count;
+                string bugununtemizlikcisi = ogrenciler[aralik];
+
+                // 3. Öğrencinin bilgilerini al
+                using (SqlCommand komut1 = new SqlCommand("SELECT * FROM ogrenci WHERE ogr_no = @no", baglanti))
+                {
+                    komut1.Parameters.AddWithValue("@no", int.Parse(bugununtemizlikcisi));
+                    using (SqlDataReader okuma1 = komut1.ExecuteReader())
+                    {
+                        if (okuma1.Read())
+                        {
+                            ogrenciler2.Add(okuma1["ogr_no"].ToString());
+                            ogrenciler2.Add(okuma1["ad"].ToString());
+                            ogrenciler2.Add(okuma1["soyad"].ToString());
+                            ogrenciler2.Add(okuma1["sinif"].ToString());
+                            ogrenciler2.Add(okuma1["cinsiyet"].ToString());
+                            ogrenciler2.Add(okuma1["telefon"].ToString());
+                        }
+                        okuma1.Close(); // Ekledim
+                    }
+                }
+
+                // 4. Gelmeyen mi kontrolü
+                using (SqlCommand gelmeyenibelirle = new SqlCommand("SELECT ogr_no FROM gelmeyenogrenci WHERE ogr_no=@no", baglanti))
+                {
+                    gelmeyenibelirle.Parameters.AddWithValue("@no", int.Parse(bugununtemizlikcisi));
+                    using (SqlDataReader reader = gelmeyenibelirle.ExecuteReader())
+                    {
+                        if (reader.Read() && reader["ogr_no"] != DBNull.Value)
+                        {
+                            MessageBox.Show("Bugünün temizlikçisi bugün gelmemiş", "Bilgilendirme", MessageBoxButtons.OKCancel);
+                            ogrenciler3.Add(reader["ogr_no"].ToString());
+                        }
+                        else
+                        {
+                            MessageBox.Show("Bugünün temizlikçisi bugün gelmiş", "Bilgilendirme", MessageBoxButtons.OKCancel);
+                        }
+                        reader.Close(); // Ekledim
+                    }
+                }
+
+                if (ogrenciler3.Count > 0)
+                {
+                    if (ogrenciler2.Count > 0 && ogrenciler2[0] != ogrenciler3[0])
+                    {
+                        // Temizlik yapan ogrenci ekle
+
+                        label4.Text = ogrenciler2[1].ToString();
+
+
+                        using (SqlCommand ekle = new SqlCommand("INSERT INTO  bugununtemizlikcisi(ogr_no, ad, soyad, sinif, cinsiyet, telefon) VALUES (@ogr_no, @ad, @soyad, @sinif, @cinsiyet, @telefon)", baglanti))
+                        {
+                            ekle.Parameters.AddWithValue("@ogr_no", ogrenciler2[0]);
+                            ekle.Parameters.AddWithValue("@ad", ogrenciler2[1]);
+                            ekle.Parameters.AddWithValue("@soyad", ogrenciler2[2]);
+                            ekle.Parameters.AddWithValue("@sinif", ogrenciler2[3]);
+                            ekle.Parameters.AddWithValue("@cinsiyet", ogrenciler2[4]);
+                            ekle.Parameters.AddWithValue("@telefon", ogrenciler2[5]);
+                            ekle.ExecuteNonQuery();
+                        }
+                        using (SqlCommand ekle = new SqlCommand("INSERT INTO temizlikyapanogr (ogr_no, ad, soyad, sinif, cinsiyet, telefon) VALUES (@ogr_no, @ad, @soyad, @sinif, @cinsiyet, @telefon)", baglanti))
+                        {
+                            ekle.Parameters.AddWithValue("@ogr_no", ogrenciler2[0]);
+                            ekle.Parameters.AddWithValue("@ad", ogrenciler2[1]);
+                            ekle.Parameters.AddWithValue("@soyad", ogrenciler2[2]);
+                            ekle.Parameters.AddWithValue("@sinif", ogrenciler2[3]);
+                            ekle.Parameters.AddWithValue("@cinsiyet", ogrenciler2[4]);
+                            ekle.Parameters.AddWithValue("@telefon", ogrenciler2[5]);
+                            ekle.ExecuteNonQuery();
+                        }
+        
+
+
+                        using (SqlCommand sil = new SqlCommand("DELETE FROM temizlikyapmayanogr WHERE ogr_no=@no", baglanti))
+                        {
+                            sil.Parameters.AddWithValue("@no", ogrenciler2[0]);
+                            sil.ExecuteNonQuery();
+                        }
+
+                        using (SqlCommand sil = new SqlCommand("DELETE FROM temizlikyapacakogr WHERE ogr_no=@no", baglanti))
+                        {
+                            sil.Parameters.AddWithValue("@no", ogrenciler2[0]);
+                            sil.ExecuteNonQuery();
+                        }
+                        listele();
+                        listele2();
+                    }
+                    else
+                    {
+                        using (SqlCommand ekle = new SqlCommand("INSERT INTO temizlikyapacakogr (ogr_no, ad, soyad, sinif, cinsiyet, telefon) VALUES (@ogr_no, @ad, @soyad, @sinif, @cinsiyet, @telefon)", baglanti))
+                        {
+                            ekle.Parameters.AddWithValue("@ogr_no", ogrenciler2[0]);
+                            ekle.Parameters.AddWithValue("@ad", ogrenciler2[1]);
+                            ekle.Parameters.AddWithValue("@soyad", ogrenciler2[2]);
+                            ekle.Parameters.AddWithValue("@sinif", ogrenciler2[3]);
+                            ekle.Parameters.AddWithValue("@cinsiyet", ogrenciler2[4]);
+                            ekle.Parameters.AddWithValue("@telefon", ogrenciler2[5]);
+                            ekle.ExecuteNonQuery();
+                        }
+
+                        for (i = 1; i < ogrenciler.Count; i++)
+                        {
+
+                            if (i == ogrenciler.Count)
+                            {
+                                MessageBox.Show("Öğrenciler gelmemiş");
+                                break;
+                            }
+                            else
+                            {
+                                int yeniIndeks = (int)(aralik + i) % ogrenciler.Count;
+
+                                string yeniOgrenci = ogrenciler[yeniIndeks];
+
+                               
+                                using (SqlCommand gelmeyenibelirle = new SqlCommand("SELECT * FROM gelmeyenogrenci WHERE ogr_no=@no", baglanti))
+                                {
+                                    gelmeyenibelirle.Parameters.AddWithValue("@no", int.Parse(yeniOgrenci));
+                                    using (SqlDataReader reader = gelmeyenibelirle.ExecuteReader())
+                                    {
+                                        ogrenciler3.Clear();
+                                        if (reader.Read())//&& reader["ogr_no"] != DBNull.Value)
+                                        {
+                                            ogrenciler3.Clear();
+                                            MessageBox.Show("Bugünün temizlikçisi bugün gelmemiş", "Bilgilendirme", MessageBoxButtons.OKCancel);
+                                            ogrenciler3.Add(reader["ogr_no"].ToString());
+                                            ogrenciler3.Add(reader["ad"].ToString());
+                                            ogrenciler3.Add(reader["soyad"].ToString());
+                                            ogrenciler3.Add(reader["sinif"].ToString());
+                                            ogrenciler3.Add(reader["cinsiyet"].ToString());
+                                            ogrenciler3.Add(reader["telefon"].ToString());
+
+                                            
+
+                                        }
+
+                                        else
+                                        {
+                                            MessageBox.Show("Öteki temizlikçi bugün gelmiş", "Bilgilendirme", MessageBoxButtons.OKCancel);
+                                        }
+                                        reader.Close();// Ekledim
+
+                                    }
+                                }
+                                if (ogrenciler3.Count == 6)
+                                {
+                                    SqlCommand Yapacakgelmediyse = new SqlCommand("insert into temizlikyapacakogr (ogr_no, ad, soyad, sinif, cinsiyet, telefon) VALUES (@no, @ad, @soyad, @sinif, @cinsiyet, @telefon)", baglanti);
+                                    Yapacakgelmediyse.Parameters.AddWithValue("@no", ogrenciler3[0]);
+                                    Yapacakgelmediyse.Parameters.AddWithValue("@ad", ogrenciler3[1]);
+                                    Yapacakgelmediyse.Parameters.AddWithValue("@soyad", ogrenciler3[2]);
+                                    Yapacakgelmediyse.Parameters.AddWithValue("@sinif", ogrenciler3[3]);
+                                    Yapacakgelmediyse.Parameters.AddWithValue("@cinsiyet", ogrenciler3[4]);
+                                    Yapacakgelmediyse.Parameters.AddWithValue("@telefon", ogrenciler3[5]);
+                                    Yapacakgelmediyse.ExecuteNonQuery();
+                                    label4.Text = ogrenciler3[1].ToString() + " Adlı temizlik yapacak öğrenci bugün gelmemiş";
+
+
+
+
+
+                                    listele();
+                                    listele2();
+
+
+
+
+                                    continue;
+                                }
+
+
+
+
+
+
+                                // 6. Yeni temizlikçi bilgisi alımı
+                                using (SqlCommand komut1 = new SqlCommand("SELECT * FROM ogrenci WHERE ogr_no = @no", baglanti))
+                                    {
+                                        komut1.Parameters.AddWithValue("@no", int.Parse(yeniOgrenci));
+                                        using (SqlDataReader okuma1 = komut1.ExecuteReader())
+                                        {
+                                            if (okuma1.Read())
+                                            {
+                                                ogrenciler2.Clear();
+                                                ogrenciler2.Add(okuma1["ogr_no"].ToString());
+                                                ogrenciler2.Add(okuma1["ad"].ToString());
+                                                ogrenciler2.Add(okuma1["soyad"].ToString());
+                                                ogrenciler2.Add(okuma1["sinif"].ToString());
+                                                ogrenciler2.Add(okuma1["cinsiyet"].ToString());
+                                                ogrenciler2.Add(okuma1["telefon"].ToString());
+                                            }
+                                            okuma1.Close(); // Ekledim
+                                        }
+                                    }
+
+                                //  Ternary oparatörü : string tablo = (result == DialogResult.Yes) ? "temizlikyapanogr" : "temizlikyapacakogr";//- eğer result değişkeni DialogResult.Yes ise, tablo değişkenine "temizlikyapanogr" değeri atanır.-Aksi takdirde, yani result değeri DialogResult.Yes değilse, tablo değişkenine "temizlikyapacakogr" atanır.
+
+                                label4.Text = ogrenciler2[1].ToString();
+                                using (SqlCommand ekle = new SqlCommand("INSERT INTO  bugununtemizlikcisi(ogr_no, ad, soyad, sinif, cinsiyet, telefon) VALUES (@ogr_no, @ad, @soyad, @sinif, @cinsiyet, @telefon)", baglanti))
+                                {
+                                    ekle.Parameters.AddWithValue("@ogr_no", ogrenciler2[0]);
+                                    ekle.Parameters.AddWithValue("@ad", ogrenciler2[1]);
+                                    ekle.Parameters.AddWithValue("@soyad", ogrenciler2[2]);
+                                    ekle.Parameters.AddWithValue("@sinif", ogrenciler2[3]);
+                                    ekle.Parameters.AddWithValue("@cinsiyet", ogrenciler2[4]);
+                                    ekle.Parameters.AddWithValue("@telefon", ogrenciler2[5]);
+                                    ekle.ExecuteNonQuery();
+                                }
+                                using (SqlCommand ekle = new SqlCommand("INSERT INTO  temizlikyapanogr(ogr_no, ad, soyad, sinif, cinsiyet, telefon) VALUES (@ogr_no, @ad, @soyad, @sinif, @cinsiyet, @telefon)", baglanti))
+                                {
+                                        ekle.Parameters.AddWithValue("@ogr_no", ogrenciler2[0]);
+                                        ekle.Parameters.AddWithValue("@ad", ogrenciler2[1]);
+                                        ekle.Parameters.AddWithValue("@soyad", ogrenciler2[2]);
+                                        ekle.Parameters.AddWithValue("@sinif", ogrenciler2[3]);
+                                        ekle.Parameters.AddWithValue("@cinsiyet", ogrenciler2[4]);
+                                        ekle.Parameters.AddWithValue("@telefon", ogrenciler2[5]);
+                                        ekle.ExecuteNonQuery();
+                                }
+                     
+                                using (SqlCommand sil = new SqlCommand("DELETE FROM temizlikyapmayanogr WHERE ogr_no=@no", baglanti))
+                                {
+                                        sil.Parameters.AddWithValue("@no", ogrenciler2[0]);
+                                        sil.ExecuteNonQuery();
+                                }
+                                using (SqlCommand yapacaksil = new SqlCommand("DELETE FROM temizlikyapacakogr WHERE ogr_no=@no", baglanti))
+                                {
+                                        yapacaksil.Parameters.AddWithValue("@no", ogrenciler2[0]);
+                                        yapacaksil.ExecuteNonQuery();
+                                }
+                                break;
+                                
+
+
+
+
+
+
+
+                            }
+
+                        }
+                    }
+
+                    listele();
+                    listele2();
+                }
+
+
+
+
+                else
+                {
+
+                    label4.Text = ogrenciler2[1].ToString();
+
+                    using (SqlCommand ekle = new SqlCommand("INSERT INTO  bugununtemizlikcisi(ogr_no, ad, soyad, sinif, cinsiyet, telefon) VALUES (@ogr_no, @ad, @soyad, @sinif, @cinsiyet, @telefon)", baglanti))
+                    {
+                        ekle.Parameters.AddWithValue("@ogr_no", ogrenciler2[0]);
+                        ekle.Parameters.AddWithValue("@ad", ogrenciler2[1]);
+                        ekle.Parameters.AddWithValue("@soyad", ogrenciler2[2]);
+                        ekle.Parameters.AddWithValue("@sinif", ogrenciler2[3]);
+                        ekle.Parameters.AddWithValue("@cinsiyet", ogrenciler2[4]);
+                        ekle.Parameters.AddWithValue("@telefon", ogrenciler2[5]);
+                        ekle.ExecuteNonQuery();
+                    }
+
+                    using (SqlCommand ekle = new SqlCommand("INSERT INTO temizlikyapanogr (ogr_no, ad, soyad, sinif, cinsiyet, telefon) VALUES (@ogr_no, @ad, @soyad, @sinif, @cinsiyet, @telefon)", baglanti))
+                    {
+                        ekle.Parameters.AddWithValue("@ogr_no", ogrenciler2[0]);
+                        ekle.Parameters.AddWithValue("@ad", ogrenciler2[1]);
+                        ekle.Parameters.AddWithValue("@soyad", ogrenciler2[2]);
+                        ekle.Parameters.AddWithValue("@sinif", ogrenciler2[3]);
+                        ekle.Parameters.AddWithValue("@cinsiyet", ogrenciler2[4]);
+                        ekle.Parameters.AddWithValue("@telefon", ogrenciler2[5]);
+                        ekle.ExecuteNonQuery();
+                    }
+
+                    using (SqlCommand sil = new SqlCommand("DELETE FROM temizlikyapmayanogr WHERE ogr_no=@no", baglanti))
+                    {
+                        sil.Parameters.AddWithValue("@no", ogrenciler2[0]);
+                        sil.ExecuteNonQuery();
+                    }
+
+
+                    listele();
+                    listele2();
+                }
+
+
+            }
             catch (Exception ex)
             {
                 MessageBox.Show("Hata oluştu: " + ex.Message);
@@ -476,10 +565,14 @@ namespace atolyetemizlikprojesi
             finally
             {
                 if (baglanti.State == ConnectionState.Open)
-                {
                     baglanti.Close();
-                }
+
+
+               
             }
+
         }
+
+      
     }
 }
