@@ -1,7 +1,7 @@
 # Atölye Temizlik Projesi
 ## Önce veritabanında şu tabloları oluşturun:
 veritabanı adı : temizlikprogrami
-   Tablolar
+Tablolar : 
 gelenogrenci,
 gelmeyenogrenci,
 ogrenci,
