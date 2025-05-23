@@ -27,6 +27,12 @@ namespace atolyetemizlikprojesi
             DataTable table = new DataTable();
             adapter.Fill(table);
             dataGridView1.DataSource = table;
+            dataGridView1.Columns["ogr_no"].HeaderText = "Öğrenci No";
+            dataGridView1.Columns["ad"].HeaderText = "Öğrenci Adı";
+            dataGridView1.Columns["soyad"].HeaderText = "Öğrenci Soyadı";
+            dataGridView1.Columns["sinif"].HeaderText = "Öğrenci Sınıfı";
+            dataGridView1.Columns["cinsiyet"].HeaderText = "Öğrenci Cinsiyeti";
+            dataGridView1.Columns["telefon"].HeaderText = "Öğrenci Telefon Numarası";
         }
         public void listele2()
         {
@@ -35,6 +41,12 @@ namespace atolyetemizlikprojesi
             DataTable table = new DataTable();
             adapter.Fill(table);
             dataGridView2.DataSource = table;
+            dataGridView2.Columns["ogr_no"].HeaderText = "Öğrenci No";
+            dataGridView2.Columns["ad"].HeaderText = "Öğrenci Adı";
+            dataGridView2.Columns["soyad"].HeaderText = "Öğrenci Soyadı";
+            dataGridView2.Columns["sinif"].HeaderText = "Öğrenci Sınıfı";
+            dataGridView2.Columns["cinsiyet"].HeaderText = "Öğrenci Cinsiyeti";
+            dataGridView2.Columns["telefon"].HeaderText = "Öğrenci Telefon Numarası";
         }
         public void listele3()
         {
@@ -43,6 +55,12 @@ namespace atolyetemizlikprojesi
             DataTable table = new DataTable();
             adapter.Fill(table);
             dataGridView3.DataSource = table;
+            dataGridView3.Columns["ogr_no"].HeaderText = "Öğrenci No";
+            dataGridView3.Columns["ad"].HeaderText = "Öğrenci Adı";
+            dataGridView3.Columns["soyad"].HeaderText = "Öğrenci Soyadı";
+            dataGridView3.Columns["sinif"].HeaderText = "Öğrenci Sınıfı";
+            dataGridView3.Columns["cinsiyet"].HeaderText = "Öğrenci Cinsiyeti";
+            dataGridView3.Columns["telefon"].HeaderText = "Öğrenci Telefon Numarası";
         }
         public void temel_islemler()
         {

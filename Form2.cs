@@ -37,6 +37,13 @@ namespace atolyetemizlikprojesi
             DataTable table = new DataTable();
             adapter.Fill(table);
             dataGridView1.DataSource = table;
+            dataGridView1.DataSource = table;
+            dataGridView1.Columns["ogr_no"].HeaderText = "Öğrenci No";
+            dataGridView1.Columns["ad"].HeaderText = "Öğrenci Adı";
+            dataGridView1.Columns["soyad"].HeaderText = "Öğrenci Soyadı";
+            dataGridView1.Columns["sinif"].HeaderText = "Öğrenci Sınıfı";
+            dataGridView1.Columns["cinsiyet"].HeaderText = "Öğrenci Cinsiyeti";
+            dataGridView1.Columns["telefon"].HeaderText = "Öğrenci Telefon Numarası";
 
         }
         public void temel_islemler()
@@ -274,5 +281,9 @@ namespace atolyetemizlikprojesi
 
         }
 
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }

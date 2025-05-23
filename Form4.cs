@@ -32,6 +32,12 @@ namespace atolyetemizlikprojesi
                 adapter.Fill(table);
                 dataGridView1.DataSource = table;
             }
+            dataGridView1.Columns["ogr_no"].HeaderText = "Öğrenci No";
+            dataGridView1.Columns["ad"].HeaderText = "Öğrenci Adı";
+            dataGridView1.Columns["soyad"].HeaderText = "Öğrenci Soyadı";
+            dataGridView1.Columns["sinif"].HeaderText = "Öğrenci Sınıfı";
+            dataGridView1.Columns["cinsiyet"].HeaderText = "Öğrenci Cinsiyeti";
+            dataGridView1.Columns["telefon"].HeaderText = "Öğrenci Telefon Numarası";
         }
 
         public void listele2()
@@ -43,6 +49,12 @@ namespace atolyetemizlikprojesi
                 adapter.Fill(table);
                 dataGridView2.DataSource = table;
             }
+            dataGridView2.Columns["ogr_no"].HeaderText = "Öğrenci No";
+            dataGridView2.Columns["ad"].HeaderText = "Öğrenci Adı";
+            dataGridView2.Columns["soyad"].HeaderText = "Öğrenci Soyadı";
+            dataGridView2.Columns["sinif"].HeaderText = "Öğrenci Sınıfı";
+            dataGridView2.Columns["cinsiyet"].HeaderText = "Öğrenci Cinsiyeti";
+            dataGridView2.Columns["telefon"].HeaderText = "Öğrenci Telefon Numarası";
         }
 
         private void Form4_Load(object sender, EventArgs e)
@@ -74,7 +86,7 @@ namespace atolyetemizlikprojesi
         int k = 0;
         private void button2_Click(object sender, EventArgs e)
         {
-            Form1 form11 = new Form1();
+            button2.Enabled = false;
             try
             {
                 
@@ -115,7 +127,7 @@ namespace atolyetemizlikprojesi
                     baglanti.Open();
 
 
-                // 1. Öğrencileri temizlikyapacakogr tablosundan al
+                //Öğrencileri temizlikyapacakogr tablosundan al
                 SqlCommand Silinecek = new SqlCommand("delete from bugununtemizlikcisi", baglanti);
                 Silinecek.ExecuteNonQuery();
 
@@ -125,7 +137,7 @@ namespace atolyetemizlikprojesi
                     {
                         while (reader.Read())
                             ogrenciler.Add(reader["ogr_no"].ToString());
-                        reader.Close(); // Ekledim
+                        reader.Close();
                     }
                 }
               
@@ -142,7 +154,7 @@ namespace atolyetemizlikprojesi
                         {
                             while (reader.Read())
                                 ogrencilerkont.Add(reader["ogr_no"].ToString());
-                            reader.Close(); // Ekledim
+                            reader.Close();
                         }
                     }
                 }
@@ -156,7 +168,7 @@ namespace atolyetemizlikprojesi
        
              
 
-                // 2. Eğer önceki liste boşsa ogrenci tablosundan al
+                //Eğer önceki liste boşsa ogrenci tablosundan al
 
                 if (ogrenciler.Count == 0)
                 {
@@ -166,7 +178,7 @@ namespace atolyetemizlikprojesi
                         {
                             while (reader.Read())
                                 ogrenciler.Add(reader["ogr_no"].ToString());
-                            reader.Close(); // Ekledim
+                            reader.Close();
                         }
                     }
                   
@@ -202,7 +214,7 @@ namespace atolyetemizlikprojesi
                     {
                         while (reader.Read())
                             yapmayan.Add(reader["ogr_no"].ToString());
-                        reader.Close(); // Ekledim
+                        reader.Close();
                     }
                 }
 
@@ -242,7 +254,7 @@ namespace atolyetemizlikprojesi
 
 
                                 }
-                                reader.Close(); // Ekledim
+                                reader.Close();
                             }
 
                         }
@@ -272,7 +284,7 @@ namespace atolyetemizlikprojesi
                 int aralik = (int)(DateTime.Now - başlangic).TotalDays % ogrenciler.Count;
                 string bugununtemizlikcisi = ogrenciler[aralik];
 
-                // 3. Öğrencinin bilgilerini al
+                //Öğrencinin bilgilerini al
                 using (SqlCommand komut1 = new SqlCommand("SELECT * FROM ogrenci WHERE ogr_no = @no", baglanti))
                 {
                     komut1.Parameters.AddWithValue("@no", int.Parse(bugununtemizlikcisi));
@@ -287,11 +299,11 @@ namespace atolyetemizlikprojesi
                             ogrenciler2.Add(okuma1["cinsiyet"].ToString());
                             ogrenciler2.Add(okuma1["telefon"].ToString());
                         }
-                        okuma1.Close(); // Ekledim
+                        okuma1.Close();
                     }
                 }
 
-                // 4. Gelmeyen mi kontrolü
+                //Gelmeyen mi kontrolü
                 using (SqlCommand gelmeyenibelirle = new SqlCommand("SELECT ogr_no FROM gelmeyenogrenci WHERE ogr_no=@no", baglanti))
                 {
                     gelmeyenibelirle.Parameters.AddWithValue("@no", int.Parse(bugununtemizlikcisi));
@@ -306,7 +318,7 @@ namespace atolyetemizlikprojesi
                         {
                             MessageBox.Show("Bugünün temizlikçisi bugün gelmiş", "Bilgilendirme", MessageBoxButtons.OKCancel);
                         }
-                        reader.Close(); // Ekledim
+                        reader.Close();
                     }
                 }
 
@@ -314,7 +326,7 @@ namespace atolyetemizlikprojesi
                 {
                     if (ogrenciler2.Count > 0 && ogrenciler2[0] != ogrenciler3[0])
                     {
-                        // Temizlik yapan ogrenci ekle
+                        //Temizlik yapan ogrenci ekle
 
                         label4.Text = ogrenciler2[1].ToString();
 
@@ -390,7 +402,7 @@ namespace atolyetemizlikprojesi
                                     using (SqlDataReader reader = gelmeyenibelirle.ExecuteReader())
                                     {
                                         ogrenciler3.Clear();
-                                        if (reader.Read())//&& reader["ogr_no"] != DBNull.Value)
+                                        if (reader.Read())
                                         {
                                             ogrenciler3.Clear();
                                             MessageBox.Show("Bugünün temizlikçisi bugün gelmemiş", "Bilgilendirme", MessageBoxButtons.OKCancel);
@@ -409,7 +421,7 @@ namespace atolyetemizlikprojesi
                                         {
                                             MessageBox.Show("Öteki temizlikçi bugün gelmiş", "Bilgilendirme", MessageBoxButtons.OKCancel);
                                         }
-                                        reader.Close();// Ekledim
+                                        reader.Close();
 
                                     }
                                 }
@@ -439,11 +451,7 @@ namespace atolyetemizlikprojesi
                                 }
 
 
-
-
-
-
-                                // 6. Yeni temizlikçi bilgisi alımı
+                                // Yeni temizlikçi bilgisi alımı
                                 using (SqlCommand komut1 = new SqlCommand("SELECT * FROM ogrenci WHERE ogr_no = @no", baglanti))
                                     {
                                         komut1.Parameters.AddWithValue("@no", int.Parse(yeniOgrenci));
@@ -459,7 +467,7 @@ namespace atolyetemizlikprojesi
                                                 ogrenciler2.Add(okuma1["cinsiyet"].ToString());
                                                 ogrenciler2.Add(okuma1["telefon"].ToString());
                                             }
-                                            okuma1.Close(); // Ekledim
+                                            okuma1.Close(); 
                                         }
                                     }
 
@@ -499,12 +507,6 @@ namespace atolyetemizlikprojesi
                                 }
                                 break;
                                 
-
-
-
-
-
-
 
                             }
 
