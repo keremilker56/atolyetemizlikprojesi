@@ -285,5 +285,15 @@ namespace atolyetemizlikprojesi
         {
 
         }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            textBox1.Text = dataGridView1.CurrentRow.Cells["ogr_no"].Value.ToString();
+            textBox2.Text = dataGridView1.CurrentRow.Cells["ad"].Value.ToString();
+            textBox3.Text = dataGridView1.CurrentRow.Cells["soyad"].Value.ToString();
+            comboBox1.Text = dataGridView1.CurrentRow.Cells["sinif"].Value.ToString();
+            comboBox2.Text = dataGridView1.CurrentRow.Cells["cinsiyet"].Value.ToString();
+            maskedTextBox1.Text = dataGridView1.CurrentRow.Cells["telefon"].Value.ToString();
+        }
     }
 }
